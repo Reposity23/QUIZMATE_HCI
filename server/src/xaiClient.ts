@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { pathToFileURL } from "url";
 import OpenAI from "openai";
 
 type UploadedFileMeta = { id: string; filename?: string; size?: number };
@@ -10,7 +11,7 @@ async function getApiKey(): Promise<string> {
   if (cachedKey) return cachedKey;
   if (process.env.XAI_API_KEY) {
     cachedKey = process.env.XAI_API_KEY;
-    return cachedKey;
+    return cachedKey!;
   }
 
   const configPath = path.resolve(__dirname, "config.js");
@@ -19,18 +20,18 @@ async function getApiKey(): Promise<string> {
   const tsExists = fs.existsSync(tsConfigPath);
 
   if (jsExists) {
-    const local = await import(configPath);
+    const local = await import(pathToFileURL(configPath).href);
     if (local.XAI_API_KEY) {
       cachedKey = local.XAI_API_KEY;
-      return cachedKey;
+      return cachedKey!;
     }
   }
 
   if (tsExists) {
-    const local = await import(tsConfigPath);
+    const local = await import(pathToFileURL(tsConfigPath).href);
     if (local.XAI_API_KEY) {
       cachedKey = local.XAI_API_KEY;
-      return cachedKey;
+      return cachedKey!;
     }
   }
 
