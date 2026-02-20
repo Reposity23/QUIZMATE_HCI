@@ -71,12 +71,12 @@ function addFiles(incoming: File[]) {
   render();
 }
 
-function render() {
+function renderApp() {
   if (isGenerating) {
     app.innerHTML = `<div class="loading-overlay">
       <div class="spinner spinner-advanced"></div>
       <h2 class="animate-pulse">Crafting Your Intelligence...</h2>
-      <p class="fade-in" style="color: var(--text-muted)">We're processing your documents into interactive challenges</p>
+      <p class="fade-in" style="color: var(--text-muted)">We're processing your documents into interactive challenges • validating schema • preparing adaptive question set</p>
       <div class="loading-dots" aria-hidden="true"><span></span><span></span><span></span></div>
     </div>`;
     return;
@@ -97,6 +97,25 @@ function render() {
   highlightCodeBlocks(app);
 }
 
+
+
+function render() {
+  try {
+    renderApp();
+  } catch (error) {
+    console.error("Render failed", error);
+    app.innerHTML = `
+      <main>
+        <section class="card glass fatal-card">
+          <h2>UI failed to render</h2>
+          <p style="color: var(--text-muted)">Please refresh the page. If this persists, open browser console and share the error.</p>
+          <button id="fatalReload" class="btn-primary-gradient">Reload</button>
+        </section>
+      </main>
+    `;
+    document.getElementById("fatalReload")?.addEventListener("click", () => window.location.reload());
+  }
+}
 function setupView() {
   return `
     <div class="ambient-layer" aria-hidden="true">
@@ -107,6 +126,7 @@ function setupView() {
     <div class="hero-section fade-in">
       <div class="hero-mascot" aria-hidden="true">🤖</div>
       <p>Transform any document into a high-quality quiz using xAI Grok</p>
+      <div class="status-ribbon"><span>⚡ Fast build</span><span>🧠 Smart prompts</span><span>🎯 High accuracy</span><span>♿ Accessible UI</span></div>
       <div class="hero-pills">
         <span>Smart transitions</span><span>Visual feedback</span><span>Accessibility-first</span><span>Trophy milestones 🏆</span>
       </div>
@@ -122,6 +142,7 @@ function setupView() {
         <div class="upload-icon">↑</div>
         <p>Drag & drop or click to browse</p>
         <span style="font-size: 0.8rem; color: var(--text-muted)">PDF, DOCX, TXT (Max 20MB)</span>
+        <div class="upload-file-tags"><span>.pdf</span><span>.docx</span><span>.txt</span><span>.pptx</span><span>.md</span></div>
       </div>
       <input id="fileInput" type="file" multiple style="display:none" />
       <ul class="file-list">${files.map((f) => `<li class="fade-in"><span>${f.name}</span><span style="color:var(--text-muted)">${(f.size / 1024 / 1024).toFixed(2)} MB</span></li>`).join("")}</ul>
@@ -130,6 +151,7 @@ function setupView() {
     ${improvementsView()}
     ${files.length ? optionsView() : ""}
     ${settingsView()}
+    <footer class="app-footer">Built for focused study sessions • Theme-aware • Keyboard friendly</footer>
     <div class="debug-container">${renderDebug(debugPayload, raw, details)}</div>
   `;
 }
@@ -193,6 +215,7 @@ function optionsView() {
   return `
     <section class="card glass fade-in">
       <h2>2) Customize Your Experience</h2>
+      <p class="settings-subtitle">Set strategy, count and difficulty before generation.</p>
       <div class="options-grid">
         <div class="input-group">
           <label for="quizType">Quiz Strategy</label>
@@ -262,6 +285,10 @@ function quizView() {
       <div class="q-header">
         <span class="q-badge">Question ${currentQuestionIndex + 1} / ${quiz.questions.length}</span>
         <span class="q-type-badge">${q.type.toUpperCase()}</span>
+      </div>
+      <div class="q-meta">
+        <span class="meta-pill">${answers[q.id] !== undefined && answers[q.id] !== "" ? "Answered" : "Unanswered"}</span>
+        <span class="meta-pill">Progress ${Math.round(progress)}%</span>
       </div>
       <section class="card question-card glass">
         <div class="question-prompt">${renderRichText(q.prompt)}</div>
