@@ -148,6 +148,7 @@ function setupView() {
       <ul class="file-list">${files.map((f) => `<li class="fade-in"><span>${f.name}</span><span style="color:var(--text-muted)">${(f.size / 1024 / 1024).toFixed(2)} MB</span></li>`).join("")}</ul>
       ${files.length ? `<button id="clearFiles" class="btn-secondary" style="width:100%">Clear Files</button>` : ""}
     </section>
+    ${improvementsView()}
     ${files.length ? optionsView() : ""}
     ${settingsView()}
     <footer class="app-footer">Built for focused study sessions • Theme-aware • Keyboard friendly</footer>
