@@ -110,6 +110,11 @@ function setupView() {
       <div class="hero-pills">
         <span>Smart transitions</span><span>Visual feedback</span><span>Accessibility-first</span><span>Trophy milestones 🏆</span>
       </div>
+      <div class="hero-stats">
+        <div><strong>10</strong><small>Max files</small></div>
+        <div><strong>100</strong><small>Max questions</small></div>
+        <div><strong>AI</strong><small>Auto-graded</small></div>
+      </div>
     </div>
     <section class="card glass">
       <h2>1) Upload Learning Material</h2>
@@ -126,23 +131,6 @@ function setupView() {
     ${files.length ? optionsView() : ""}
     ${settingsView()}
     <div class="debug-container">${renderDebug(debugPayload, raw, details)}</div>
-  `;
-}
-
-function improvementsView() {
-  const upgrades = [
-    "Gradient background", "Floating orbs", "Glass cards", "Solid card mode", "Hover lift", "Smooth focus ring", "Hero mascot", "Animated hero chips", "Drop-zone scale", "Upload icon polish",
-    "Styled file pills", "Card shadow depth", "Progress glow bar", "Question badges", "Choice slide hover", "Choice selected state", "Matching row cards", "Action button symmetry", "Primary CTA glow", "Secondary CTA restyle",
-    "Success CTA polish", "Result badge pills", "Explanation panel", "Ring score animation", "Result border color", "Fade-in transitions", "Pulse headline", "Better spinner", "Loading dots", "Theme presets",
-    "Font presets", "Color combinations", "Animation toggle", "Persistent preferences", "Card style selector", "Settings panel", "Preview chips", "Accessibility spacing", "Responsive cards", "Mobile action stack",
-    "Unified border radii", "Improved muted text", "Reduced clutter", "Body radial layers", "Dynamic accent", "Input contrast", "Quiz container polish", "Section hierarchy", "Trophy mention", "Consistent typography",
-  ];
-
-  return `
-    <section class="card glass fade-in">
-      <h2>UI Upgrade Board (50 Improvements)</h2>
-      <div class="improvement-grid">${upgrades.map((item) => `<span class="improvement-chip">${item}</span>`).join("")}</div>
-    </section>
   `;
 }
 
@@ -285,6 +273,7 @@ function quizView() {
             : `<button id="nextQ" class="btn-primary">Continue</button>`
           }
         </div>
+        <p class="question-hint">Tip: You can navigate questions in any order before final submission.</p>
       </section>
     </div>
   `;
@@ -296,7 +285,8 @@ function scoreView() {
 
   return `
     <div class="results-container">
-      <section class="card glass fade-in" style="text-align:center">
+      <section class="card glass fade-in score-card" style="text-align:center">
+        <div class="trophy-banner" aria-hidden="true">🏆 Achievement Unlocked</div>
         <div class="score-display">
           <svg class="progress-ring" width="200" height="200">
             <circle class="progress-ring__circle-bg" stroke="#1e293b" stroke-width="12" fill="transparent" r="85" cx="100" cy="100"/>

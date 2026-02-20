@@ -77,6 +77,36 @@ h2 { margin-top: 0; }
 .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
 .hero-pills span { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .06em; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); }
 
+.hero-stats { display: grid; grid-template-columns: repeat(3, minmax(90px, 1fr)); gap: 10px; max-width: 420px; margin: 14px auto 0; }
+.hero-stats div { border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); border-radius: 14px; padding: 10px; display: grid; gap: 2px; }
+.hero-stats strong { font-size: 1rem; color: #fff; }
+.hero-stats small { color: var(--text-muted); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; }
+
+.card h2 { letter-spacing: .01em; }
+.card section { isolation: isolate; }
+
+.btn-primary-gradient:hover, .btn-primary:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.btn-secondary:hover { background: #475569; }
+.btn-success:hover { filter: brightness(1.05); }
+
+.result-actions { display: flex; gap: 10px; }
+
+.question-card { position: relative; overflow: hidden; }
+.question-card::before { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 45%, transparent), transparent 40%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+.question-body { display: grid; gap: 10px; }
+.question-hint { margin: 12px 0 0; color: var(--text-muted); font-size: .85rem; border-top: 1px dashed rgba(255,255,255,.12); padding-top: 10px; }
+
+.text-answer-input { width: 100%; min-height: 56px; }
+.match-left { font-weight: 600; }
+
+.score-card { position: relative; overflow: hidden; }
+.trophy-banner { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; background: color-mix(in srgb, var(--warning) 20%, transparent); border: 1px solid color-mix(in srgb, var(--warning) 40%, transparent); padding: 6px 12px; margin-bottom: 12px; font-size: .8rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.score-card::after { content: '✦'; position: absolute; right: 20px; top: 16px; color: color-mix(in srgb, var(--primary) 70%, #fff); opacity: .35; font-size: 1.2rem; }
+
+.review-list .card { margin-bottom: 14px; }
+
+.debug-container details { border-radius: 12px; }
+
 .card {
   border-radius: 24px;
   padding: 30px;
